@@ -1,0 +1,738 @@
+ C语言课程笔记 
+
+------------------------------lesson1  打印-------------------------
+#include<stdio.h>
+
+int main()
+{
+	printf("Hello World!\n");   //  “\n”表示换行
+	return 0;
+}
+------------------------------lesson2  变量与常变量-----------------------------
+#include<stdio.h>
+
+int main()
+{
+	int a;   
+	char b;
+	char B[5];  //定义字符串，以后会用到，这里没用
+	float c;
+	double d;
+
+	const int e = 10;  //"const"为定义"常变量"，必须在定义时赋值
+
+	a = 50;
+	b = 'F';
+	c = 3.14;
+	d = 3.141592653;
+
+	printf("a的数值是%d \n", a);
+	printf("这个字母是%c \n", b);
+	printf("圆周率是%.2f \n", c);  //.2表示精确到小数点后2位
+	printf("圆周率精确到小数点后9位是%11.9f \n", d);  //11.9表示共占11个字符位，
+	//并精确到小数点后9位
+	printf("e的值是 %d \n", e);
+
+	return 0;
+}
+----------------------------------lesson3  常量和宏定义------------------------------
+#include<stdio.h>
+
+#define NAME "鱼C工作室"   //常量与宏定义在main()前定义
+#define BOSS "小甲鱼"      //常量与宏定义后无需";"
+#define YEAR 2010
+#define MONTH 5
+#define DAY 20
+
+int main()
+{
+	printf("%s成立于%d年%d月%d日\n",NAME,YEAR,MONTH,DAY ); // "%s"表示字符串
+	printf("%s是%s创立的\n", NAME, BOSS);
+		return 0;
+}
+
+----------------------------------lesson4  数据类型---------------------------------------
+
+#include<stdio.h>
+
+int main()
+{
+	int i;   //"short"短整型，2字节； "int" 整型，4字节；"long"长整型，4字节
+	char j;
+	float k;
+	double m;
+	long double n;
+
+	i = 123; 
+	j = 'C';
+	k = 3.14;
+	m = 1.2736426282;  //由于"double"只能保存8字节，无法完全表达m，所以用"long double"
+	n = 1.2736426282;
+	printf("size of int is %d\n", sizeof(int));  //sizeof()输出变量所占字节大小
+	printf("size of i is %d\n", sizeof(i));
+	printf("size of char is %d\n", sizeof(char));
+	printf("size of j is %d\n", sizeof(j));
+	printf("size of float is %d\n", sizeof(float));
+	printf("size of k is %d\n", sizeof(k));
+	printf("size of double is %d\n", sizeof(double));
+	printf("size of m is %d\n", sizeof(m));    
+	printf("size of long double is %d\n", sizeof(long double));
+	printf("size of n is %d\n", sizeof(n));
+
+	int a;                  //"signed"表示定义有符号变量，不说明默认为此
+	unsigned int b;  //"unsigned"表示定义无符号变量
+	a = -1;
+	b = 1;
+	printf("a=%d\n", a);
+	printf("b=%u\n", b);//输出"unsigned"的值要用"%u"
+
+               //打印 ASCII 码从 33 到 126 的字符及其对应的十进制数值
+               int ii;
+               for (ii = 33; ii < 127; ++ii)
+	     printf("%d=%c\t", ii, ii);   //"\t"表示空4个格
+
+	return 0;
+}
+
+-------------------------------------lesson5  取值范围-------------------------------------
+
+#include<stdio.h>
+#include<math.h>  //使用"pow(a,b)"要在此声明
+
+int main()
+{
+	int a = 2;  //定义与赋值可以分开，也可以在一起
+	int b = 3;
+	int m = pow(a, b);  //"pow(a,b)"表示a的b次方
+	int n = pow(b, a);
+
+	printf("the number of m is %d\n", m);
+	printf("the number of n is %d\n", n);
+
+	//计算一下"int"可表示的数值个数
+	int result1 = pow(2, 31) - 1;  //4个字节，4*8=32个bit位，但首位为符号位
+	unsigned int result2 = pow(2, 32) - 1;
+
+	printf("int 可表示的数值个数 %d \n", result1);
+	printf("unsigned int 可表示的数值个数 %u \n", result2);  //"unsigned int"---"%u"
+
+	return 0;
+}
+
+-------------------------------------lesson6  字符与字符串-------------------------------------
+#include<stdio.h>
+
+int main()
+{
+	//字符，二进制数与英文字符的对应关系——ASCII表
+
+	char a = 'C';
+	printf("%c = %d \n", a, a);
+
+	char b = 70, c = 105, d = 115, e = 104, f = 67;
+	printf("%c%c%c%c%c \n", b, c, d, e, f);
+
+	//字符串
+
+	char g[6] = { 'F','i','s','h','C','1'};  //没有"\0"表示字符串结束，会出乱码
+	printf("%s \n", g);
+
+	char h[7] = { 'F','i','s','h','C','2','\0'};  //"\0"也要占一字符位
+	printf("%s \n", h);
+
+	char i[]= { 'F','i','s','h','C','3','\0' };  //"[]"里的数可以省略
+	printf("%s \n", i);
+
+	char j[] = { "FishC4" };  //此种表达方式为"双引号"
+	printf("%s \n", j);
+
+	return 0;
+}
+
+---------------------------------lesson7  运算符--------------------------
+#include<stdio.h>
+#include<math.h>
+
+int main()
+{
+	//算数运算符
+
+	int i, j, k;
+
+	i = 1 + 2;
+	j = 1 + 2 * 3;
+	k = i + j + -1 + pow(2, 3);
+
+	printf("i = %d\n", i);
+	printf("j = %d\n", j);
+	printf("k = %d\n", k);
+	printf("整型输出 = %d\n", 1 + int(2.0));  //"int()"——类型转换
+	printf("整型输出 = %d\n", 1 + int(1.8));  //直接去掉小数点后，"1.8变为1"
+	printf("\n");
+
+	//关系运算符（真为1，假为0）
+
+	int a = 5, b = 3, c, d;
+
+	c = 1 < 2;
+	d = a > b;
+
+	printf("%d \n", c);  //输出表达式可以事先定义
+	printf("%d \n", d);
+	printf("%d \n", a <= 1 + b);  //输出表达式也可以直接在"printf()"里写出
+	printf("%d \n", 'a' + 'b' <= 'c');
+	printf("%d \n", (a = 3) > (b = 5));  //输出为1表示真，0表示假
+	printf("\n");
+
+	//逻辑运算符（非!、与&&、或||）（真为1，假为0）
+
+	int e = 5, f = 3;
+
+	printf("%d \n", 3 > 1 && 1 < 2);
+	printf("%d \n", 3 + 1 || 2 == 0);  //人写给计算机时，"非零值"即为真
+	printf("%d \n", !(e + f));
+	printf("%d \n", !0 + 1 < 1 || !(3 + 4));
+	printf("%d \n", 'a' - 'b' && 'c');  //输出为1表示真，0表示假
+
+
+	return(0);
+}
+
+--------------------------------lesson8  if语句-----------------------------------
+#include<stdio.h>
+
+int main()
+{
+	//if语句
+
+	int i;
+
+	printf("今年多大啦：");
+	//scanf_s("我今年%d岁了", &i);  //输入必须与双引号内完全对应，即输入必须是"我今年XX岁了"
+	scanf_s("%d", &i);  //VS2022的"scanf_s"就是"scanf"
+
+	if (i >= 18)
+	{
+		printf("您里边请！\n");
+		printf("雅座一位！\n");
+	}
+	else
+	{
+		printf("慢走，不送！\n");
+	}
+	printf("\n");
+
+	//if-else if语句
+
+	int j;
+	printf("请输入成绩：");
+	scanf_s("%d", &j);
+
+	if (j >= 90)
+	{
+		printf("A\n");
+	}
+	else if (j >= 80 && j < 90)
+	{
+		printf("B\n");
+	}
+	else if (j >= 70 && j < 80)
+	{
+		printf("C\n");
+	}
+	else if (j >= 60 && j < 70)
+	{
+		printf("D\n");
+	}
+	else 
+	{
+		printf("E\n");
+	}
+	printf("\n");
+
+	//if语句的嵌套
+
+	int a, b;
+	printf("输入a的值：");
+	scanf_s("%d", &a);
+	printf("输入b的值：");
+	scanf_s("%d", &b);
+
+	if (a != b)
+	{
+		if (a > b)
+		{
+			printf("%d > %d\n", a, b);
+			printf("a > b");
+		}
+		else
+		{
+			printf("%d < %d\n", a, b);
+			printf("a < b");
+		}
+	}
+	else
+	{
+		printf("%d = %d\n", a, b);
+		printf("a = b");
+	}
+	return 0;
+}
+
+------------------------------------lesson9  switch语句-----------------------------------
+//switch 语句适合处理离散的、具体的"常量值"判断（如 case 1: case 2:）
+
+#include<stdio.h>
+
+int main()
+{
+	char ch;
+
+	printf("请输入成绩等级：");
+	scanf_s("%c", &ch);
+
+	switch (ch)
+	{
+	    case'A':printf("你的成绩在90分以上！\n"); break;  //case 后不能直接跟条件判断表达式
+	    case'B':printf("你的成绩在80~90分！\n"); break;  //只能跟常量表达式,如'A'
+	    case'C':printf("你的成绩在70~80分！\n"); break;
+	    case'D':printf("你的成绩在60~70分！\n"); break;
+	    case'E':printf("你的成绩在60分以下！\n"); break;
+		default:printf("请输入有效的成绩等级！\n"); break;
+	}
+		
+	return 0;
+
+}
+
+-------------------------------lesson10  while与do-while循环-----------------------------------
+#include<stdio.h>
+
+int main()
+{
+	//"while"循环
+
+	int i, sum;
+	i = 1;
+	sum = 0;
+
+	while (i <= 100)
+	{
+		sum = i + sum;
+		i = i + 1;
+	}
+	printf("sum=%d", sum);
+	printf("\n");
+
+	int count = 0;
+	printf("输入一个英文句子：");
+	while (getchar() != '\n')  //从标准输入（键盘）逐个读取字符,输入“回车”跳出循环
+	{
+		count = count + 1;
+	}
+	printf("总共输入%d字符！", count);
+	printf("\n");
+
+	//"do-while'循环
+
+	int m = 1, sum1 = 0;
+	do
+	{
+		sum1 = sum1 + m;
+		m = m + 1;
+	} while (m <= 50);
+	printf("sum=%d", sum1);
+
+	return 0;
+}
+
+--------------------------------------lesson11 for循环---------------------------
+#include<stdio.h>
+
+int main()
+{
+	//for循环，判断一个数是否为素数
+
+	int i, m, num;
+	
+	m = 0;
+	printf("请输入一个整数：");
+	scanf_s("%d", &num);
+
+	for (i = 2; i <= num / 2; i++)
+	{
+		if (num % i == 0)
+		{
+			m = 1;
+			break;
+		}
+	}
+	if (m == 1)
+	{
+		printf("这个数不是素数！\n");
+	}
+	else
+	{
+		printf("这个数是素数！\n");
+	}
+
+	//for循环，找出100以内的素数
+
+	int i1, num1, j = 0, k, n;
+	int a[30];  //定义数组
+
+	for (num1 = 2; num1 <= 100; num1++)
+	{
+		n = 0;      //n必须在此初始化，如果在循环外不会迭代；若在内循环里用else会被反复覆盖
+		for (i1 = 2; i1 <= num1 / 2; i1++)
+		{
+			if (num1 % i1 == 0)
+			{
+				n = 1;
+				break;
+			}
+		}
+		if (n == 0)
+		{
+		    a[j++] = num1;  //往数组里填充内容
+		}
+	}
+	
+	printf("100以内的素数有：\n");
+	for (k = 0; k < j; k++)
+	{
+		printf("%d\t", a[k]);  //注意调用数组需要"用循环"
+	}
+	printf("\n");
+
+	//for的循环嵌套  //外循环为“行”，内循环为“列”
+
+	int b, c;
+
+	for (b = 1; b <= 5; b++)     //外循环为“行”，内循环为“列”
+	{
+		for (c = 1; c <= b; c++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	int d, e, f;
+
+	for (d = 1; d <= 5; d++)
+	{
+		for (e = 1; e <= 5-d; e++)
+		{
+			printf(" ");
+		}
+		for (f = 1; f <= d; f++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	//打印“九九乘法表”
+	int g, h;
+
+	for (g = 1; g <= 9; g++)
+	{
+		for (h = 1; h <= g; h++)
+		{
+			printf("%dx%d=%d\t", g, h, g * h);
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+-------------------------lesson12  break与continue语句------------------------------
+#include<stdio.h>
+
+int main()
+	{
+	//break语句
+	int i, j;
+	for (i = 0; i < 10; i++)
+	{
+		for (j = 0; j < 10; j++)
+		{
+			if (j == 3)
+			{
+				break;
+			}
+		}
+	}
+	printf("i=%d j=%d", i, j);
+	printf("\n");
+
+	int i1, j1;
+	for (i1 = 0; i1 < 10; i1++)
+	{
+		for (j1 = 0; j1 < 10; j1++)
+		{
+			if (j1 == 3)
+			{
+				break;  //这个break只能跳出内层循环
+			}
+		}
+
+		if (j1 == 3)
+		{
+			break;  //这个break才能跳出外层循环
+		}
+
+	}
+	printf("i1=%d j1=%d", i1, j1);
+	printf("\n");
+	
+	//continue语句
+	char ch;
+	while ((ch = getchar()) != '\n')  //"getchar()" 每次读取一个字符并赋值给 ch
+	{
+		if (ch == 'C')
+		{
+			continue;
+		}
+		putchar(ch);  //"putchar()"专门用于输出单个字符
+	}
+	
+	
+	return 0;
+	}
+
+-------------------------------------lesson13  一维数组-------------------------------------
+#include<stdio.h>
+#define num 10
+
+int main()
+{
+	//计算十个人的平均分
+	int s[num];
+	int i, sum;
+	sum = 0;
+
+	for (i = 0; i < num; i++)  //数组输入要用循环
+	{
+		printf("输入第%d位同学的成绩：", i + 1);  
+		scanf_s("%d", &s[i]);
+	}
+
+	for (i = 0; i < num; i++)  //数组调用也需要用循环
+	{
+		sum = sum + s[i];  
+	}
+	
+	printf("平均分为%.2f\n", (float)sum / num);  //(float)用于强制转换类型
+
+	return 0;
+}
+
+-------------------------------------lesson14  字符串 定义 处理函数-------------------------------------
+#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+	//字符串定义
+	char str1[] = { "fishc" };
+	char str2[] = "FISHC";
+	printf("str1 = %s \n", str1);  //调用str1不加"[]"
+	printf("str2 = %s \n", str2);  //输出字符串用"%s"
+
+	//获取字符串长度  #include<string.h>  strlen()
+	char str3[] = "I love fishc.com!";
+	printf("str3的尺寸为 %d \n",sizeof(str3));  //sizeof()为尺寸，包含'\0'
+	printf("str3的长度为 %u \n",strlen(str3));  //strlen()为长度，不包含'\0'
+
+	//复制字符串  strcpy()/strncpy()
+	char str4[] = "Original String";
+	char str5[] = "New String";
+	char str6[100];
+	strcpy_s(str4, str5);
+	strcpy_s(str6, "Copy Successful");
+	printf("str4: %s \n", str4);
+	printf("str5: %s \n", str5);
+	printf("str6: %s \n", str6);
+
+	//连接字符串  stract()/strncat()
+	char str7[100] = "Original String";  //先确保目标缓冲区足够大，再调用"strcat_s"
+	char str8[] = "New String";
+	strcat_s(str7, " ");
+	strcat_s(str7, str8);
+	printf("str7: %s \n", str7);  //每一次新的处理都会保存到str7里
+
+	//比较字符串  strcmp()/strncmp()
+	char str9[] = "fishc.com";
+	char str10[] = "fishckl.com";
+	if (strcmp(str9, str10) == 0)  //一致时，strcmp()为0
+	{
+		printf("字符串一致！");
+	}
+	else
+	{
+		printf("字符串不一致！");
+	}
+
+	return 0;
+}
+
+-------------------------------------lesson15  二维数组-------------------------------------
+#include<stdio.h>
+
+int main()
+{
+	//定义二维数组
+	int a[5][5];
+	char b[4][5];
+
+	//定义、输出二维数组
+	int c[4][5] = {
+		{80,92,85,86,99},
+		{78,65,89,70,99},
+		{67,78,76,89,99},
+		{88,68,98,90,99}
+	};
+
+	int i, j;
+
+	for (i = 0; i < 4; i++)  //二维数组的调用需要双重循环
+	{
+		for (j = 0; j < 5; j++)
+		{
+			printf("%d\t", c[i][j]);
+		}
+		printf("\n");
+	}
+
+	//输入、输出二维数组
+	int d[3][3];
+	int m, n;
+
+	for (m = 0; m < 3; m++)  //二维数组的输入需要双重循环
+	{
+		for (n = 0; n < 3; n++)
+		{
+			printf("请依次输入九个数：");
+			scanf_s("%d", &c[m][n]);
+		}
+	}
+
+	for (m = 0; m < 3; m++)
+	{
+		for (n = 0; n < 3; n++)
+		{
+			printf("%d\t", c[m][n]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
+
+---------------------------------lesson16  指针初步------------------------------
+#include<stdio.h>
+
+int main()
+{
+	char a = 'F';
+	int f = 123;
+	char *pa = &a;  //&为取"地址"
+	int *pf = &f;  //定义指针时，必须赋值，不可"int *pa;"
+
+	printf("a=%c\n", *pa);
+	printf("f=%d\n", *pf);
+
+	*pa = 'c';
+	*pf += 1;
+
+	printf("now a=%c\n", *pa);  //*pa为输出指针的值
+	printf("now f=%d\n", *pf);
+
+	printf("sizeof pa=%d\n", sizeof(pa));
+	printf("sizeof pf=%d\n", sizeof(pf));
+
+	printf("address a=%p\n", pa);  //pa为输出指针的地址
+	printf("address f=%p\n", pf);  //此时要用'%p'
+
+	return 0;
+}
+
+-----------------------------lesson17  指针和数组-------------------------------
+#include<stdio.h>
+
+int main()
+{
+	int a;
+	int *p = &a;
+
+	printf("输入一个数字：");
+	scanf_s("%d", &a);  //对于变量，需要"&"取地址
+	printf("a=%d\n", a);
+
+	printf("再输入一个数字：");
+	scanf_s("%d", p);  //指针p自己就是地址，所以无需"&"
+	printf("a=%d\n", a);
+
+	//数组名就是地址信息，所以scanf_s()时不用"&"
+	char str[128];
+	printf("输入一段字母：");
+	scanf_s("%s", str, sizeof(str));   //输入数组不用"&"  补充sizeof(str)指定缓冲区大小
+	printf("刚才输入的字母为：%s\n", str);
+	printf("str address: %p\n", str);      //数组名就是数组第一个元素的地址
+	printf("str address: %p\n", &str[0]);  //所以，这两行代码执行结果一样
+
+	int b[5] = { 1,2,3,4,5 };
+	printf("b[0]->%p,b[1]->%p,b[2]->%p\n", &b[0], &b[1], &b[2]);
+	
+	//指针的运算
+	char c[] = "fishc";
+	char *pc = c;  //指向数组的指针
+	printf("*pc=%c,*(pc+1)=%c,*(pc+2)=%c\n", *pc, *(pc + 1), *(pc + 2));  //指向下一个元素
+	printf("pc->%p,(pc+1)->%p,(pc+2)->%p\n", pc, pc + 1, pc + 2);  //指向下一个地址
+
+	return 0;
+}
+
+-------------------------------------lesson18  指针数组 与 数组指针----------------------------
+#include<stdio.h>
+
+int main()
+{
+	//指针数组（是数组）（几乎没用）
+	int a = 1;
+	int b = 2;
+	int c = 3;
+	int d = 4;
+	int e = 5;
+	int *p1[5] = { &a,&b,&c,&d,&e };
+	int i;
+
+	for (i = 0; i < 5; i++)
+	{
+		printf("%d\n", *p1[i]);
+	}
+
+	//指向数组的普通指针
+	int temp[5] = { 1,2,3,4,5 };
+	int *p = temp;  //int *p 是指向单个 int 元素的指针（普通指针）,无需加 &，直接用 temp 初始化 p 即可
+	int j;
+
+	for (j = 0; j < 5; j++)
+	{
+		printf("%d\n", *(p + j));
+	}
+
+	//数组指针（是指针）
+	int temp1[5] = {1,2,3,4,5};
+	int (*p2)[5] = &temp1;  //int (*p2)[5] 是指向整个数组的指针（数组指针）,必须使用 &temp1 才能获取整个数组的地址
+	int m;
+
+	for (m = 0; m < 5; m++)
+	{
+		printf("%d\n", (*p2)[m]);
+	}
+
+	return 0;
+}
